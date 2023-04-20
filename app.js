@@ -60,6 +60,23 @@ app.get("/products/:productId?",(req,res)=>{
     }
   
 })
+app.get("/file.txt",(req,res)=>{
+    res.status(200).json({
+        statusCode:res.statusCode,
+        data:{
+            file:req.url
+        }
+    })
+});
+app.get("/ab?cd/",(req,res)=>{
+    res.status(200).json({
+        statusCode:res.statusCode,
+        data:{
+            file:req.url
+        }
+    })
+});
+
 app.listen(3000,()=>{
     console.log("connect to server")
 })
