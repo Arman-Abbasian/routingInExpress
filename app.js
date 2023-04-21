@@ -3,6 +3,8 @@ const querystring=require("querystring");
 const { users, products, posts } = require("./db");
 const req = require("express/lib/request");
 const app=express();
+app.use(express.json());
+app.use(express.urlencoded());
 
 app.get("/",(req,res)=>{
     res.json({
@@ -101,6 +103,18 @@ app.get("/posts",function(req,res){
         data:{
             message:"successfully",
             posts:matchedTitles
+        }
+    })
+})
+//send data with body
+app.post("/body",(req,res)=>{
+    res.status(201).json({
+        statusCode:res.statusCode,
+        data:{
+            message:"send data successfully",
+            data:{
+                body:req.body
+            }
         }
     })
 })
