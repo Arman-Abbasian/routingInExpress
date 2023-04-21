@@ -4,9 +4,13 @@ const querystring=require("querystring");
 const { users, products, posts } = require("./db");
 const { Auth } = require("./utils");
 
+const morgan=require("morgan");
+
 const app=express();
+//middlewares
+app.use(morgan('tiny'))
 app.use(express.json());
-//app.use(express.urlencoded());
+app.use(express.urlencoded());
 app.use((req,res,next)=>{
     console.log('Hello');
     next()
