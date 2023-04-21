@@ -1,5 +1,7 @@
 const express=require("express");
-const { users, products } = require("./db");
+const querystring=require("querystring");
+const { users, products, posts } = require("./db");
+const req = require("express/lib/request");
 const app=express();
 
 app.get("/",(req,res)=>{
@@ -68,6 +70,7 @@ app.get("/file.txt",(req,res)=>{
         }
     })
 });
+//make routes with regex
 app.get("/ab?cd/",(req,res)=>{
     res.status(200).json({
         statusCode:res.statusCode,
@@ -76,7 +79,31 @@ app.get("/ab?cd/",(req,res)=>{
         }
     })
 });
-
+//qurystrings in routes
+app.get("/querystrings",function(req,res){
+    console.log((req.query))
+    res.status(200).json({
+        statusCode:res.statusCode,
+        data:{
+            message:"successfully",
+            querysting:req.query,
+            stringifyQuerystring:querystring.stringify(req.query)
+        }
+    })
+})
+//search in posts db qurystrings in routes
+app.get("/posts",function(req,res){
+    const {title}=req.query;
+    const queryTitle=new RegExp(title ?? '','ig');
+    const matchedTitles=posts.filter(item=>item.title.match(queryTitle))
+    res.status(200).json({
+        statusCode:res.statusCode,
+        data:{
+            message:"successfully",
+            posts:matchedTitles
+        }
+    })
+})
 app.listen(3000,()=>{
     console.log("connect to server")
 })
